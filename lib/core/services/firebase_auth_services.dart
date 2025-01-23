@@ -3,7 +3,6 @@ import 'package:fruit_app/core/errors/exceptions.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
-
 class FirebaseAuthServices {
   Future<User> createUserWithEmailAndPassword(
       String email, String password) async {
@@ -63,11 +62,19 @@ class FirebaseAuthServices {
     );
     return (await FirebaseAuth.instance.signInWithCredential(credential)).user!;
   }
+
   Future<User> signInWithFacebook() async {
-  final LoginResult loginResult = await FacebookAuth.instance.login();
+    final LoginResult loginResult = await FacebookAuth.instance.login();
 
-  final OAuthCredential facebookAuthCredential = FacebookAuthProvider.credential(loginResult.accessToken!.tokenString);
+    final OAuthCredential facebookAuthCredential =
+        FacebookAuthProvider.credential(loginResult.accessToken!.tokenString);
 
-  return (await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential)).user!;
-}
+    return (await FirebaseAuth.instance
+            .signInWithCredential(facebookAuthCredential))
+        .user!;
+  }
+
+  Future deleteUser() async {
+    await FirebaseAuth.instance.currentUser!.delete();
+  }
 }
