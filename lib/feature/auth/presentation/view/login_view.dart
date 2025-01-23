@@ -7,6 +7,7 @@ import 'package:fruit_app/core/widgets/custom_progress_hud.dart';
 import 'package:fruit_app/feature/auth/domain/repos/auth_repo.dart';
 import 'package:fruit_app/feature/auth/presentation/cubits/login_cubit/login_cubit.dart';
 import 'package:fruit_app/feature/auth/presentation/view/widget/login_view_body.dart';
+import 'package:fruit_app/feature/home/presentation/view/home_view.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
@@ -23,7 +24,7 @@ class LoginView extends StatelessWidget {
           return BlocConsumer<LoginCubit, LoginState>(
             listener: (context, state) {
               if (state is LoginCubitSuccess) {
-                // Navigator.pop(context);
+                Navigator.pushNamed(context, HomeView.routeName);
               }
               if (state is LoginCubitFailure) {
                 buildErrorBar(context, state.message);
